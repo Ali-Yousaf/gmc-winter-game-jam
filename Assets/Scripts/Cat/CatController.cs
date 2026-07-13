@@ -26,6 +26,7 @@ public class CatController : MonoBehaviour
     private bool isGrounded;
     private bool isRunning;
     private bool isAttacking;
+    private bool facingRight = true;
 
     void Awake()
     {
@@ -117,10 +118,17 @@ public class CatController : MonoBehaviour
     void Flip()
     {
         if (moveInput > 0)
+        {
             spriteRenderer.flipX = true;
-        
+            facingRight = true;
+        }
+
+
         else if (moveInput < 0)
+        {
             spriteRenderer.flipX = false;
+            facingRight = false;
+        }
     }
 
     // Called from an Animation Event
@@ -129,12 +137,8 @@ public class CatController : MonoBehaviour
         isAttacking = false;
     }
 
-    void OnDrawGizmosSelected()
+    public Vector2 GetFacingDirection()
     {
-        if (groundCheck == null)
-            return;
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(groundCheck.position, groundRadius);
+        return facingRight ? Vector2.right : Vector2.left;
     }
 }

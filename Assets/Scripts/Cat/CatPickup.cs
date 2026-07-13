@@ -39,23 +39,31 @@ public class CatPickup : MonoBehaviour
 
     void ThrowItem()
     {
+        if (heldItem == null)
+            return;
+
         heldItem.SetActive(true);
 
-        heldItem.transform.position = cat.position + Vector3.up * 0.5f;
+        Vector2 facing = CatController.Instance.GetFacingDirection();
+
+        heldItem.transform.position = (Vector2)cat.position + facing * 0.5f + Vector2.up * 0.25f;
 
         Rigidbody2D rb = heldItem.GetComponent<Rigidbody2D>();
 
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
-            rb.angularVelocity = 0;
+            rb.angularVelocity = 0f;
 
             Vector2 direction = new Vector2(
-                Random.Range(-0.7f, 0.7f),
+                facing.x,
                 Random.Range(0.2f, 0.5f)
             ).normalized;
 
             rb.AddForce(direction * throwForce, ForceMode2D.Impulse);
+
+            float spinSpeed = 720f;
+            rb.angularVelocity = direction.x > 0 ? -spinSpeed : spinSpeed;
         }
 
         heldItem = null;
