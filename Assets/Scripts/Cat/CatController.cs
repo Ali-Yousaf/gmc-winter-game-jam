@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class CatController : MonoBehaviour
 {
+    public static CatController Instance;
+
     [Header("Movement")]
     [SerializeField] private float walkSpeed = 3f;
     [SerializeField] private float runSpeed = 6f;
@@ -27,6 +29,12 @@ public class CatController : MonoBehaviour
 
     void Awake()
     {
+        if(Instance == null)
+            Instance = this;
+
+        else
+            Destroy(gameObject);
+
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
@@ -77,7 +85,7 @@ public class CatController : MonoBehaviour
 
     void HandleAttack()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             isAttacking = true;
             moveInput = 0;
