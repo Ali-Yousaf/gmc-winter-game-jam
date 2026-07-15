@@ -2,18 +2,21 @@ using UnityEngine;
 
 public class ThrowBall : MonoBehaviour
 {
+    public static ThrowBall Instance;
+
     [SerializeField] private GameObject ballPrefab;
     [SerializeField] private float throwForce = 8f;
     [SerializeField] private float spawnHeight = 0.5f;
 
     [SerializeField] private Transform player;
 
-    void Update()
+    void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            ThrowTheBall();
-        }
+        if(Instance == null)
+            Instance = this;
+
+        else
+            Destroy(gameObject);    
     }
 
     public void ThrowTheBall()
