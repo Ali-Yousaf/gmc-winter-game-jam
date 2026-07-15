@@ -8,7 +8,7 @@ public class ThrowBall : MonoBehaviour
     [SerializeField] private float throwForce = 8f;
     [SerializeField] private float spawnHeight = 0.5f;
 
-    [SerializeField] private Transform player;
+    [SerializeField] private Transform spawnPoint;
 
     void Awake()
     {
@@ -21,7 +21,7 @@ public class ThrowBall : MonoBehaviour
 
     public void ThrowTheBall()
     {
-        Vector3 spawnPosition = player.position + Vector3.up * spawnHeight;
+        Vector3 spawnPosition = spawnPoint.position + Vector3.up * spawnHeight;
         GameObject ball = Instantiate(ballPrefab, spawnPosition, Quaternion.identity);
         Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
 
