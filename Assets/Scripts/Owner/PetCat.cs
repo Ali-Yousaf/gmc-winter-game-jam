@@ -21,6 +21,8 @@ public class PetCat : MonoBehaviour
 
     public void PetTheCat()
     {
+        CatStats.Instance.IncreaseLove();
+
         for (int i = 0; i < heartsPerPet; i++)
         {
             float delay = i * spawnInterval;

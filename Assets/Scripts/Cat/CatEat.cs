@@ -1,10 +1,17 @@
+using TMPro;
 using UnityEngine;
 
 public class CatEat : MonoBehaviour
 {
     [SerializeField] private Transform cat;
+    [SerializeField] private TextMeshProUGUI interactionText;
     private GameObject nearbyItem;
     private GameObject heldItem;
+
+    void Start()
+    {
+        interactionText.text = "";
+    }
 
     void Update()
     {
@@ -29,6 +36,10 @@ public class CatEat : MonoBehaviour
         Destroy(heldItem);
 
         Debug.Log("Eating...");
+
+        CatStats.Instance.IncreaseHunger();
+        interactionText.text = "";
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -37,6 +48,7 @@ public class CatEat : MonoBehaviour
         {
             nearbyItem = other.gameObject;
             Debug.Log("Press E to EAT");
+            interactionText.text = "Press E to Eat";
         }
     }
 

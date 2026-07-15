@@ -1,12 +1,19 @@
+using TMPro;
 using UnityEngine;
 
 public class CatPickup : MonoBehaviour
 {
     [SerializeField] private Transform cat;
     [SerializeField] private float throwForce = 8f;
+    [SerializeField] private TextMeshProUGUI interactionText;
 
     private GameObject nearbyItem;
     private GameObject heldItem;
+
+    void Start()
+    {
+        interactionText.text = "";
+    }
 
     void Update()
     {
@@ -19,6 +26,8 @@ public class CatPickup : MonoBehaviour
 
             else
             {
+                
+                CatStats.Instance.IncreaseMood();
                 ThrowItem();
             }
         }
@@ -35,6 +44,7 @@ public class CatPickup : MonoBehaviour
         heldItem.SetActive(false);
 
         Debug.Log("Picked up!");
+        interactionText.text = "";
     }
 
     void ThrowItem()
@@ -74,6 +84,7 @@ public class CatPickup : MonoBehaviour
         if (other.CompareTag("Item"))
         {
             nearbyItem = other.gameObject;
+            interactionText.text = "Press E to Pick";
             Debug.Log("Press E to Pick");
         }
     }

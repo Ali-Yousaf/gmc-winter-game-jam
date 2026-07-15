@@ -27,15 +27,14 @@ public class CatStats : MonoBehaviour
     [SerializeField] private float punchScale = 0.15f;
     [SerializeField] private float punchDuration = 0.3f;
 
-    private bool moodTweening, hungerTweening, loveTweening;
-
     void Awake()
     {
         if(Instance == null)
             Instance = this;
-
+        
         else
             Destroy(gameObject);
+            
     }
 
     private void Start()
@@ -47,9 +46,9 @@ public class CatStats : MonoBehaviour
 
     private void Update()
     {
-        if (!moodTweening) DecaySlider(moodSlider, moodDecayRate);
-        if (!hungerTweening) DecaySlider(hungerSlider, hungerDecayRate);
-        if (!loveTweening) DecaySlider(loveSlider, loveDecayRate);
+        DecaySlider(moodSlider, moodDecayRate);
+        DecaySlider(hungerSlider, hungerDecayRate);
+        DecaySlider(loveSlider, loveDecayRate);
     }
 
     private void DecaySlider(Slider slider, float rate)
@@ -57,22 +56,17 @@ public class CatStats : MonoBehaviour
         slider.value = Mathf.Max(slider.minValue, slider.value - rate * Time.deltaTime);
     }
 
-    public void IncreaseMood() => AnimateIncrease(moodSlider, moodIncreaseAmount, v => moodTweening = v);
-    public void IncreaseHunger() => AnimateIncrease(hungerSlider, hungerIncreaseAmount, v => hungerTweening = v);
-    public void IncreaseLove() => AnimateIncrease(loveSlider, loveIncreaseAmount, v => loveTweening = v);
+    public void IncreaseMood() => AnimateIncrease(moodSlider, moodIncreaseAmount);
+    public void IncreaseHunger() => AnimateIncrease(hungerSlider, hungerIncreaseAmount);
+    public void IncreaseLove() => AnimateIncrease(loveSlider, loveIncreaseAmount);
 
-    private void AnimateIncrease(Slider slider, float amount, System.Action<bool> setTweeningFlag)
+    private void AnimateIncrease(Slider slider, float amount)
     {
         float target = Mathf.Min(slider.maxValue, slider.value + amount);
 
-        setTweeningFlag(true);
-
         slider.DOKill();
-        slider.DOValue(target, tweenDuration)
-            .SetEase(tweenEase)
-            .OnComplete(() => setTweeningFlag(false));
+        slider.DOValue(target, tweenDuration).SetEase(tweenEase);
 
-        // Little punch on the slider's fill area for extra juice
         slider.transform.DOKill();
         slider.transform.DOPunchScale(Vector3.one * punchScale, punchDuration, 4, 0.5f);
     }
