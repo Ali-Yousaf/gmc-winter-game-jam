@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 
 public class CatStats : MonoBehaviour
-{   
+{
     public static CatStats Instance;
 
     [Header("Sliders")]
@@ -21,53 +21,74 @@ public class CatStats : MonoBehaviour
     [SerializeField] private float hungerIncreaseAmount = 25f;
     [SerializeField] private float loveIncreaseAmount = 20f;
 
-    [Header("Tween Settings")]
-    [SerializeField] private float tweenDuration = 0.4f;
-    [SerializeField] private Ease tweenEase = Ease.OutQuad;
+    [Header("UI Animation")]
+    [SerializeField] private float sliderSmoothSpeed = 100f;
     [SerializeField] private float punchScale = 0.15f;
     [SerializeField] private float punchDuration = 0.3f;
 
-    void Awake()
+    private float mood;
+    private float hunger;
+    private float love;
+
+    private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
             Instance = this;
-        
         else
             Destroy(gameObject);
-            
     }
 
     private void Start()
     {
-        moodSlider.value = moodSlider.maxValue;
-        hungerSlider.value = hungerSlider.maxValue;
-        loveSlider.value = loveSlider.maxValue;
+        mood = moodSlider.maxValue;
+        hunger = hungerSlider.maxValue;
+        love = loveSlider.maxValue;
+
+        moodSlider.value = mood;
+        hungerSlider.value = hunger;
+        loveSlider.value = love;
     }
 
     private void Update()
     {
-        DecaySlider(moodSlider, moodDecayRate);
-        DecaySlider(hungerSlider, hungerDecayRate);
-        DecaySlider(loveSlider, loveDecayRate);
+        // Decay stats
+        mood = Mathf.Max(moodSlider.minValue, mood - moodDecayRate);
+        hunger = Mathf.Max(hungerSlider.minValue, hunger - hungerDecayRate);
+        love = Mathf.Max(loveSlider.minValue, love - loveDecayRate);
+
+        // Smoothly update UI
+        moodSlider.value = Mathf.MoveTowards(moodSlider.value, mood, sliderSmoothSpeed);
+        hungerSlider.value = Mathf.MoveTowards(hungerSlider.value, hunger, sliderSmoothSpeed);
+        loveSlider.value = Mathf.MoveTowards(loveSlider.value, love, sliderSmoothSpeed);
     }
 
-    private void DecaySlider(Slider slider, float rate)
+    public void IncreaseMood()
     {
-        slider.value = Mathf.Max(slider.minValue, slider.value - rate * Time.deltaTime);
+        mood = Mathf.Min(moodSlider.maxValue, mood + moodIncreaseAmount);
+        PunchSlider(moodSlider);
     }
 
-    public void IncreaseMood() => AnimateIncrease(moodSlider, moodIncreaseAmount);
-    public void IncreaseHunger() => AnimateIncrease(hungerSlider, hungerIncreaseAmount);
-    public void IncreaseLove() => AnimateIncrease(loveSlider, loveIncreaseAmount);
-
-    private void AnimateIncrease(Slider slider, float amount)
+    public void IncreaseHunger()
     {
-        float target = Mathf.Min(slider.maxValue, slider.value + amount);
+        hunger = Mathf.Min(hungerSlider.maxValue, hunger + hungerIncreaseAmount);
+        PunchSlider(hungerSlider);
+    }
 
-        slider.DOKill();
-        slider.DOValue(target, tweenDuration).SetEase(tweenEase);
+    public void IncreaseLove()
+    {
+        love = Mathf.Min(loveSlider.maxValue, love + loveIncreaseAmount);
+        PunchSlider(loveSlider);
+    }
 
+    private void PunchSlider(Slider slider)
+    {
         slider.transform.DOKill();
-        slider.transform.DOPunchScale(Vector3.one * punchScale, punchDuration, 4, 0.5f);
+
+        slider.transform.DOPunchScale(
+            Vector3.one * punchScale,
+            punchDuration,
+            4,
+            0.5f
+        );
     }
 }

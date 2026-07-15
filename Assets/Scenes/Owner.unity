@@ -1448,14 +1448,13 @@ MonoBehaviour:
   moodSlider: {fileID: 1289315298}
   hungerSlider: {fileID: 1923856098}
   loveSlider: {fileID: 1189724231}
-  moodDecayRate: 50
-  hungerDecayRate: 70
-  loveDecayRate: 60
+  moodDecayRate: 0.1
+  hungerDecayRate: 0.2
+  loveDecayRate: 0.1
   moodIncreaseAmount: 15
   hungerIncreaseAmount: 20
   loveIncreaseAmount: 15
-  tweenDuration: 0.4
-  tweenEase: 6
+  sliderSmoothSpeed: 100
   punchScale: 0.15
   punchDuration: 0.3
 --- !u!1 &775336748
@@ -2026,9 +2025,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 5000
   m_WholeNumbers: 1
-  m_Value: 100
+  m_Value: 5000
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2254,9 +2253,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 5000
   m_WholeNumbers: 1
-  m_Value: 100
+  m_Value: 5000
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2688,9 +2687,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 5000
   m_WholeNumbers: 1
-  m_Value: 100
+  m_Value: 5000
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
