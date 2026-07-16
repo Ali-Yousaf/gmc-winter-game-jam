@@ -1,14 +1,33 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class OwnerTimerManager : MonoBehaviour
 {
-    void Update()
+    [Header("Timer Settings")]
+    [SerializeField] private float minTime = 30f;
+    [SerializeField] private float maxTime = 45f;
+
+    [Header("Dialog Settings")]
+    [SerializeField] private string dialogMessage = "Owner is LEAVING!";
+    [SerializeField] private float delayBeforeSceneChange = 3f;
+
+    public LevelLoader levelLoader;
+
+    private void Start()
     {
-        if(Input.GetKeyDown(KeyCode.S))
-        {
-            DialogManager.Instance.ShowDialog("Owner is LEAVING!");
-            SceneManager.LoadScene("No Owner");
-        }
+        StartCoroutine(OwnerLeavesRoutine());
+    }
+
+    private IEnumerator OwnerLeavesRoutine()
+    {
+        float waitTime = Random.Range(minTime, maxTime);
+        yield return new WaitForSeconds(waitTime);
+
+        DialogManager.Instance.ShowDialog(dialogMessage);
+
+        yield return new WaitForSeconds(delayBeforeSceneChange);
+        
+        levelLoader.LoadNoOwnerScene();
     }
 }

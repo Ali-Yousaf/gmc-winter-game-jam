@@ -9,15 +9,15 @@ public class LevelLoader : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.O))
-        {
-            LoadOwnerScene();
-        }
+        // if(Input.GetKeyDown(KeyCode.O))
+        // {
+        //     LoadOwnerScene();
+        // }
 
-        if(Input.GetKeyDown(KeyCode.N))
-        {
-            LoadNoOwnerScene();
-        }
+        // if(Input.GetKeyDown(KeyCode.N))
+        // {
+        //     LoadNoOwnerScene();
+        // }
     }
 
     public void LoadOwnerScene()

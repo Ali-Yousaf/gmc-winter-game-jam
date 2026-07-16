@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7725491, g: 0.5568628, b: 0.33333334, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8313726, g: 0.08235294, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1475,10 +1475,10 @@ MonoBehaviour:
   dialogText: {fileID: 1981271115}
   hiddenYOffset: 200
   extraDownOffset: 80
-  slideDuration: 0.6
+  slideDuration: 0.4
   slideInEase: 27
   slideOutEase: 26
-  displayDuration: 3
+  displayDuration: 1.5
 --- !u!114 &726637557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1491,6 +1491,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dbff73618d1ccf4f9cc0a9c612ba674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OwnerTimerManager
+  minTime: 5
+  maxTime: 10
+  dialogMessage: Owner is LEAVING!
+  delayBeforeSceneChange: 3
+  levelLoader: {fileID: 2096475182}
 --- !u!1 &775336748
 GameObject:
   m_ObjectHideFlags: 0
@@ -1648,7 +1653,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.28627452, g: 0.7137255, b: 0.75294125, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2940,6 +2945,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2045206042}
   m_CullTransparentMesh: 1
+--- !u!114 &2096475182 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1910028803364636004, guid: a7e40811bf62a6745ba7c1bacf4acdc1, type: 3}
+  m_PrefabInstance: {fileID: 6507082522115005608}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f3095c1888743a4e90b6caff10766b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelLoader
 --- !u!1001 &6507082522115005608
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2991,6 +3007,10 @@ PrefabInstance:
     - target: {fileID: 8872973520704929118, guid: a7e40811bf62a6745ba7c1bacf4acdc1, type: 3}
       propertyPath: m_Name
       value: LevelLoader
+      objectReference: {fileID: 0}
+    - target: {fileID: 8872973520704929118, guid: a7e40811bf62a6745ba7c1bacf4acdc1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
