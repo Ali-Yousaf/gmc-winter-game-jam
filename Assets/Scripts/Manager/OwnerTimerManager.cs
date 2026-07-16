@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OwnerTimerManager : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class OwnerTimerManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.S))
         {
             DialogManager.Instance.ShowDialog("Owner is LEAVING!");
+            SceneManager.LoadScene("No Owner");
         }
     }
 }
