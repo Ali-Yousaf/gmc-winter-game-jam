@@ -7,10 +7,10 @@ public class MinigameManager : MonoBehaviour
 
     [Header("Minigame References")]
     [SerializeField] private ChessPuzzleMinigame chessMinigame;
+    [SerializeField] private GeoGuessMinigame geoGuessMinigame;
 
     [SerializeField] private GameObject minigamePanelRoot;
 
-    // Defines the fixed order every mission plays through
     private readonly MinigameType[] sequenceOrder =
     {
         MinigameType.Chess,
@@ -25,6 +25,10 @@ public class MinigameManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+
+        minigamePanelRoot.SetActive(false);
+        chessMinigame.gameObject.SetActive(false);
+        geoGuessMinigame.gameObject.SetActive(false);
     }
 
     public void LaunchMissionSequence(Difficulty difficulty)
@@ -38,34 +42,32 @@ public class MinigameManager : MonoBehaviour
 
     private void PlayNextInSequence()
     {
-        DeactivateAllMinigames();
-
         if (currentSequence.Count == 0)
         {
-            // All minigames in this mission finished
+            chessMinigame.gameObject.SetActive(false);
+            geoGuessMinigame.gameObject.SetActive(false);
+
             minigamePanelRoot.SetActive(false);
             DialogManager.Instance.ShowDialog("Mission Complete!");
             return;
         }
 
         MinigameType nextType = currentSequence.Dequeue();
-        LaunchSingleMinigame(nextType, currentDifficulty);
-    }
 
-    private void LaunchSingleMinigame(MinigameType type, Difficulty difficulty)
-    {
-        switch (type)
+        switch (nextType)
         {
             case MinigameType.Chess:
                 chessMinigame.gameObject.SetActive(true);
-                chessMinigame.Launch(difficulty);
+                geoGuessMinigame.gameObject.SetActive(false);
+                chessMinigame.Launch(currentDifficulty);
+                break;
+
+            case MinigameType.GeoGuess:
+                chessMinigame.gameObject.SetActive(false);
+                geoGuessMinigame.gameObject.SetActive(true);
+                geoGuessMinigame.Launch(currentDifficulty);
                 break;
         }
-    }
-
-    private void DeactivateAllMinigames()
-    {
-        chessMinigame.gameObject.SetActive(false);
     }
 
     public void OnMinigameComplete(bool success)
@@ -75,7 +77,6 @@ public class MinigameManager : MonoBehaviour
             DialogManager.Instance.ShowDialog("Correct! Next up...");
             PlayNextInSequence();
         }
-
         else
         {
             DialogManager.Instance.ShowDialog("Wrong, try again!");

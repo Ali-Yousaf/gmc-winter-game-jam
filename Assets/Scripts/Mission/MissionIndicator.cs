@@ -24,6 +24,7 @@ public class MissionIndicator : MonoBehaviour
         if (catNearby && Input.GetKeyDown(KeyCode.E))
         {
             StartMission();
+            Destroy(gameObject);
         }
     }
 
