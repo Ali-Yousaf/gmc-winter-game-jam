@@ -75,6 +75,7 @@ public class MinigameManager : MonoBehaviour
         if (success)
         {
             DialogManager.Instance.ShowDialog("Correct! Next up...");
+            ProgressBar.Instance.Progress(5);
             PlayNextInSequence();
         }
         else
