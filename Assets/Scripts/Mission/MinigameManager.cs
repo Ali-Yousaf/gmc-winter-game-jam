@@ -79,7 +79,7 @@ public class MinigameManager : MonoBehaviour
         }
         else
         {
-            DialogManager.Instance.ShowDialog("Wrong, try again!");
+            GameManager.Instance.GameOver();
         }
     }
 }
